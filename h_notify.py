@@ -73,7 +73,7 @@ class Notifier(object):
             'ingroup' : ingroup
             }
 
-    def notify_facet(self, facet=None, value=None, groupname=None):
+    def notify_facet(self, facet=None, value=None, groupname=None, gather=False):
         params = {}
         params[facet] = value
         params['max_results'] = 200  
@@ -81,6 +81,7 @@ class Notifier(object):
         rows = list(h.search_all(params))
         rows.sort(key=itemgetter('updated'))
         cache = self.data()
+        anno_list = []
         for row in rows:
             new = False
             anno = HypothesisAnnotation(row)
@@ -95,8 +96,15 @@ class Notifier(object):
                     cache[value].add(anno.id) 
                     new = True
             if new and anno.id not in self.notified_ids:
-                self.notify(anno, groupname=groupname)
+                if gather:
+                    anno_list.append(anno)
+                else:
+                    self.notify(anno, groupname=groupname)
                 self.notified_ids.append(anno.id)
+
+        if gather:
+            self.notify(anno_list=anno_list, groupname=groupname)
+
         self.save(cache)
         return self.notified_ids
 
