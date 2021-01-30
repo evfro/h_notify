@@ -4,7 +4,9 @@ This fork enables exporting annotations made in [hypothes.is](https://web.hypoth
 For more details on how the general API for hypothes.is works, please visit the [original repo](https://github.com/judell/h_notify).
 
 # Usage
-First of all, make sure to properly edit the lines below from the `fetch_annotations.py` file to configure `h_notify` script to use your personal token and account information from `hypothes.is`:
+After cloning the repo, make sure to initialize `hypothesis` submodule, as it's not initialized by default (follow standard steps for cloning repositories with submodules from git documentation).
+
+Once the repo is prepared, make sure to properly edit the lines below from the `fetch_annotations.py` file to configure `h_notify` script to use your personal token and account information from `hypothes.is`:
 
 ```python
 hypothesis_api_token = <your-secret-token-here>  # from your user account, typically starts with `6879-`
