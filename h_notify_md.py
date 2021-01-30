@@ -83,7 +83,6 @@ class MarkdownNotifier(Notifier):
                 tags = ' '.join([f'#{tag.strip()}' for tag in tags.split(',')])
                 mdFile.new_line(tags)
             
-            indent = ''
             if note:
                 note = "\n".join([
                     f"- {line}" if not line.strip().startswith('- ') else line
@@ -91,7 +90,11 @@ class MarkdownNotifier(Notifier):
                 ])
                 mdFile.new_paragraph(note)
                 indent = '\t'
-            mdFile.new_line(f"{indent}> {quote}")
+            else:   
+                indent = ''
+            
+            for quote_line in quote.split('\n'):
+                mdFile.new_line(f"{indent}> {quote_line}")
             mdFile.new_line(f"{indent}> [{timestamp}]({location})")
 
     def write_markdown(self, md_object):
