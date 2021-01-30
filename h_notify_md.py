@@ -10,7 +10,7 @@ from h_notify import Notifier
 log_file = 'h_notify.log'
 file_date_format = "%Y-%m-%d"
 note_date_format = "%d-%m-%Y %H:%M"
-file_log_err_level = logging.DEBUG # logging.ERROR is recommended
+file_log_err_level = logging.ERROR # logging.ERROR is recommended
 
 
 def init_logger(name=None, level=None, custom_logging=None):
