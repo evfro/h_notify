@@ -10,7 +10,7 @@ from h_notify import Notifier
 log_file = 'h_notify.log'
 file_date_format = "%Y-%m-%d"
 note_date_format = "%d-%m-%Y %H:%M"
-file_log_err_level = logging.DEBUG # logging.ERROR is recommended
+file_log_err_level = logging.ERROR # logging.ERROR is recommended
 
 
 def init_logger(name=None, level=None, custom_logging=None):
@@ -83,7 +83,6 @@ class MarkdownNotifier(Notifier):
                 tags = ' '.join([f'#{tag.strip()}' for tag in tags.split(',')])
                 mdFile.new_line(tags)
             
-            indent = ''
             if note:
                 note = "\n".join([
                     f"- {line}" if not line.strip().startswith('- ') else line
@@ -91,7 +90,11 @@ class MarkdownNotifier(Notifier):
                 ])
                 mdFile.new_paragraph(note)
                 indent = '\t'
-            mdFile.new_line(f"{indent}> {quote}")
+            else:   
+                indent = ''
+            
+            for quote_line in quote.split('\n'):
+                mdFile.new_line(f"{indent}> {quote_line}")
             mdFile.new_line(f"{indent}> [{timestamp}]({location})")
 
     def write_markdown(self, md_object):
